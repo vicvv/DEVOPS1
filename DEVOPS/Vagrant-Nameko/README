@@ -1,0 +1,33 @@
+This is a README file for .
+Simple Vagrant file is capable to build, update and start nameko service on both Ubuntu 16.4 VM machines
+
+
+10.1.1.16 - frontend
+10.1.1.17 - backend
+
+
+To build the machines runs the following single command:
+
+$ vagrant up
+
+To verify the build and see if nameko is atarted after the build is compete and provision sections 
+are run login into the machines and check if nameko has started:
+
+$ vagrant ssh frontend
+
+vagrant@vagrant:~$ ps -elf | grep nameko
+4 S root     14022     1  0  80   0 - 21719 -      02:50 ?        00:00:00 /usr/bin/python3.7 /usr/local/bin/nameko run --config ./ip.yaml frontend_nameko_httpd
+
+$ hostname -I will returnt the IP of the VM 
+
+and similary for backend:
+
+$ vagrant ssh backend
+
+To test file download use the following command:
+
+ curl http://10.1.1.16:8000/get/b.txt -O
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    12  100    12    0     0    500      0 --:--:-- --:--:-- --:--:--   500
+

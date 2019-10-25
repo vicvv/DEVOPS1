@@ -1,0 +1,29 @@
+a) Build Docker Image
+docker build .
+
+docker images
+
+#tag the image
+docker tag <image-id-from-docker-images> <repo-name>/<version>
+docker tag <image-id-from-docker-images> simple-mongodb/version1.0
+
+b) run in background
+docker run -d <image-id-from-docker-image-cmd> <repo-name>/<version>
+
+c) get console into docker images
+
+#get container-id of running docker container
+docker ps
+docker exec -it <container-id-from-docker-ps> /bin/bash
+
+#run mongo shell
+mongo
+
+#stop/start
+docker stop <container-id-from-docker-ps>
+docker restart <container-id-from-docker-ps>
+
+#kill it
+docker kill <container-id-from-docker-ps>
+
+

@@ -1,0 +1,2 @@
+sh -c "env LD_LIBRARY_PATH\=\$HOME/lib /usr/share/code/code" %U
+/home/ubunto

@@ -1,0 +1,60 @@
+
+# Create and configure the AWS instance(s)
+Vagrant.configure('2') do |config|
+
+  # Use dummy AWS box
+  # vagrant box add DummyBoxForAWS https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
+  config.vm.box = 'DummyBoxForAWS'
+
+  # Folder settings, leave this set to disabled
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # Provision
+  #config.vm.provision "shell", path: "./bootstrap.sh" 
+
+  # Specify AWS provider configuration
+  config.vm.provider 'aws' do |aws, override|
+    aws.aws_profile='default'
+
+    #*******************************************
+    # Create a Key Pair with ssh, http, https,, and port 8080 access
+    # allow access from any ip address. To do this in the console:
+    # Services -> EC2 -> Key Pairs (on the left). The keypair will be
+    # downloaded into your Downloads folder. Copy into the folder 
+    # where the Vagrantfile is placed.
+    #
+    # Specify SSH keypair to use, without the .pem extension
+    # On mac and Linux run 'chmod 400' on the pem file
+    aws.keypair_name = 'KeyPair07New'
+
+    #**************************************************
+    # ***you need to change this to your value
+    # ***to get this value , in the AWS Management console go to:
+    # Service -> VPC -> Subnets -> pick one of the subnets and
+    # copy it's Subnet ID and paste in here within quotes
+    aws.subnet_id='subnet-b4c8d4d3'
+
+    # Specify region, AMI ID, and security group(s)
+    aws.instance_type = "t2.micro"
+    aws.region = 'us-west-1'
+    
+    # us-west-1 Ubuntu Server 16.04 LTS (HVM), SSD Volume Type - ami-0ad16744583f21877
+    aws.ami = 'ami-0ad16744583f21877'
+    
+    #*****************************************
+    #get this value from Services -> EC2 -> Security Groups
+    #Group ID
+    aws.security_groups = ['sg-17089b6c']
+   
+    aws.tags = { 'Name' => 'vagrant' }
+    aws.elastic_ip = true
+
+    # Specify username and private key path
+    override.ssh.username = 'ubuntu'
+    
+    #*****************************************************
+    # ***change this to ame of your ssh keyfile
+    # *** on Mac and Linux run 'chmod 400' on your pem ssh key file
+    override.ssh.private_key_path = './KeyPair07New.pem'
+  end
+end

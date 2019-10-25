@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+   config.vm.define "frontend" do |frontend|
+     #frontend.vm.box = "bento/ubuntu-16.04"
+     frontend.vm.box = "ubuntu/xenial64"
+     frontend.vm.network  "forwarded_port", guest: 80, host: 4567
+     frontend.vm.provider "virtualbox" do |vb|
+       vb.memory = '512'
+     end
+     #frontend.vm.network "private_network", type: "dhcp"
+     frontend.vm.network "private_network", ip: '10.1.1.16' 
+     frontend.vm.provision "install_curl", type: "shell", inline: <<-SHELL
+      sudo apt-get -y install curl
+      SHELL
+   # Install docker
+   frontend.vm.provision "install_docker", type: "shell", inline: <<-SHELL
+      cd /vagrant
+      bash ./install_docker.bash
+      #sudo apt-get update
+      #sudo apt-get -y install docker-ce
+      # allow default user ubuntu to run docker
+      sudo groupadd docker;
+      sudo usermod -aG docker ubuntu;
+   SHELL
+
+   # Build and deploy nameko frontend
+   frontend.vm.provision "install_frontend", type: "shell", inline: <<-SHELL
+     cd /vagrant
+     bash ./deploy_docker_frontend.bash 10.1.1.17
+   SHELL
+   end
+end
+

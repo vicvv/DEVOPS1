@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+#  Vagrantfile API/syntax version. 
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+   # Mount Vagrantfile folder. This is default, but if the mount gets lost, reload will restore it with this.
+   config.vm.synced_folder ".","/vagrant"
+
+   # Make a private network
+   config.vm.network "private_network", ip: "10.0.1.17"
+   config.vm.network :forwarded_port, guest: 80, host: 4568
+
+
+   # This is using xenial64 as the base box
+   config.vm.box = "ubuntu/xenial64"
+
+
+   config.vm.provision "install_curl", type: "shell", inline: <<-SHELL
+      sudo apt-get -y install curl
+   SHELL
+
+   config.vm.provision "install_docker", type: "shell", inline: <<-SHELL
+      cd /vagrant
+      bash ./install_docker.bash
+      # allow default user ubuntu to run docker
+      sudo groupadd docker
+      sudo usermod -aG docker ubuntu
+   SHELL
+
+   # Build and deploy nameko backend
+   config.vm.provision "install_backend", type: "shell", inline: <<-SHELL
+      cd /vagrant
+      bash ./deploy_docker_backend.bash 
+   SHELL
+
+
+end
+

@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  
+
+  config.vm.define "frontend" do |frontend|
+    frontend.vm.box = "bento/ubuntu-16.04"
+    frontend.vm.network  "forwarded_port", guest: 8000, host: 4567
+    frontend.vm.provider "virtualbox" do |vb|
+      vb.memory = '512'
+    end
+    #frontend.vm.network "private_network", type: "dhcp"
+    frontend.vm.network "private_network", ip: '10.1.1.16'
+    frontend.vm.provision "shell", path: "provisioners/install_python_nameko.sh"
+    frontend.vm.provision "shell", inline: "cd /vagrant/src; nameko run --config ./ip.yaml frontend_nameko_httpd &"
+  end
+
+  config.vm.define "backend" do |backend|
+    backend.vm.box = "bento/ubuntu-16.04"
+    backend.vm.network :forwarded_port, guest: 8000, host: 4568
+    backend.vm.provider "virtualbox" do |vb|
+      vb.memory = '512'
+    end
+    #backend.vm.network "private_network", type: "dhcp"
+    backend.vm.network "private_network", ip: '10.1.1.17'
+    backend.vm.provision "shell", path: "provisioners/install_python_nameko.sh"
+    backend.vm.provision "shell", inline: "cd /vagrant/src; nameko run backend_nameko_http &"
+  end
+
+  config.vm.box = "bento/ubuntu-16.04"
+end
