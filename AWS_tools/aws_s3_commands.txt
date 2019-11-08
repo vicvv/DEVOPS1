@@ -1,0 +1,126 @@
+echo "Exercise 01"
+Exercise 01
+
+$ aws s3 help
+$ aws s3 mb help
+$ aws s3 mb s3://mybucket-0000002
+make_bucket: mybucket-0000002
+$ aws s3 ls
+2019-02-18 16:13:30 mybucket-0000001
+2019-02-18 16:26:00 mybucket-0000002
+
+$ aws s3 ls | grep "mybucket-0000002"
+2019-02-18 16:26:00 mybucket-0000002
+
+$aws s3 ls --recursive | cut -d" " -f 3| grep "api2"
+mybucket-witha3api2
+
+
+$ aws s3 ls --recursive | tail -1
+2019-02-19 09:50:45 mybucket-witha3api2
+
+aws s3 ls --recursive | awk -F_ '{print $1 $2}'| sort -n -k 2,2 | tail -1
+2019-02-19 09:50:45 mybucket-witha3api2
+
+
+# Using aws s3api:
+
+aws s3api help
+aws s3api create-bucket help
+$ aws s3api create-bucket --bucket my-bucket01 --region us-east-1
+$ aws s3api create-bucket --bucket mybucket-witha3api2 --region us-east-1
+{
+    "Location": "/mybucket-witha3api2"
+}
+$ 
+
+
+
+
+
+$ !echo
+echo "Exercise 02"
+Exercise 02
+$ touch TestData.txt
+$ vi TestData.txt 
+$ aws s3 help   #in help menu I used /upload to find command help for upload
+$ aws s3 ls
+2019-02-18 16:13:30 mybucket-0000001
+2019-02-18 16:26:00 mybucket-0000002
+$ aws s3 cp TestData.txt s3://mybucket-0000002
+upload: ./TestData.txt to s3://mybucket-0000002/TestData.txt     
+$ 
+
+# Using aws s3api:
+
+$ aws s3api help
+$ aws s3api put-object help
+$ aws s3api put-object --bucket mybucket-witha3api2 --key test/TestDataforAWSs3api.txt --body TestDataforAWSs3api.txt
+
+
+aws s3api put-object --bucket shellallusersb-e797d5bf --key $user --body "$password $email"
+
+aws s3api put-object --bucket shellallusersb-e797d5bf --key user --body "password email"
+
+
+$ !echo
+echo "Exercise 03"
+Exercise 03
+$ aws s3 help
+$ aws s3 ls 
+2019-02-18 16:13:30 mybucket-0000001
+2019-02-18 16:26:00 mybucket-0000002
+$ aws s3 ls s3://mybucket-0000002
+2019-02-18 16:33:15         10 TestData.txt
+$ 
+
+# Using aws s3api:
+$ aws s3api help
+$ aws s3api list-objects help
+$ aws s3api list-objects --bucket mybucket-witha3api2 --query 'Contents[].{Key: Key, Size: Size}'
+[
+    {
+        "Key": "/Users/vicky/Desktop/AWS_Class/AWS_Homework2/TestDataforAWSs3api.txt",
+        "Size": 0
+    },
+    {
+        "Key": "test/TestDataforAWSs3api.txt",
+        "Size": 0
+    }
+]
+
+$ !e
+echo "Exercise 04"
+Exercise 04
+$ ls
+AWS_Homework2.txt	TestData.txt
+$ rm TestData.txt 
+$ aws s3 help
+$ aws s3 sync help
+$ aws s3 sync . s3://mybucket-0000002
+upload: ./AWS_Homework2.txt to s3://mybucket-0000002/AWS_Homework2.txt
+
+# Using aws s3api:
+
+aws s3api does not have sync capability according to someone who works at AWS and
+answered my question on SO
+
+$ !echo
+echo "Exercise 05"
+Exercise 05
+$ aws s3 help
+$ aws s3 rb help
+$ aws s3 sync . s3://mybucket-0000002 --delete
+delete: s3://mybucket-0000002/TestData.txt
+$ aws s3 rb s3://mybucket-0000002 --force
+delete: s3://mybucket-0000002/AWS_Homework2.txt
+remove_bucket: mybucket-0000002
+$ 
+
+
+# Using aws s3api:
+$ aws s3api help
+$ aws s3api delete-bucket help
+$ aws s3api delete-bucket --bucket mybucket-0000001 --region ...
+
+
