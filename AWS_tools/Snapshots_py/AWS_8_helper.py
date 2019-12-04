@@ -221,7 +221,7 @@ class Createinstance:
         while(sshloop):   
             try:          
                 #ssh.connect(dns_name,username='ec2-user', key_filename=securitykey+'.pem')
-                ssh.connect(ip_address,username='ec2-user', key_filename='vitoshkav64.pem')
+                ssh.connect(ip_address,username='ec2-user', key_filename='.pem')
                 sshloop = False
                 print(str(ip_address) +  ' ssh connection successful')
             except paramiko.ssh_exception.NoValidConnectionsError as e:
