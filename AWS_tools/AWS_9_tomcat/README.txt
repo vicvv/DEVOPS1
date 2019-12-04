@@ -1,4 +1,4 @@
-Homwork9 contains 2 esential files:
+H9 contains 2 esential files:
 
 - AWS_9_Tomcat.py
 - AWS_helper.py
