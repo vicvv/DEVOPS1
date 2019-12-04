@@ -17,4 +17,4 @@ Please read comments in all py files for details.
 Usage:
 All needed parametes are hardcoded in AWS_8_helper. In order to run the script please replace 
 the hardcoded parameters with your own.
-The script always works correctly in debug mode and not so correctly in run mode
+The script always works correctly in debug mode and not so correctly in run mode due to the latency
