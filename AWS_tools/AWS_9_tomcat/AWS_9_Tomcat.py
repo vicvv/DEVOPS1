@@ -71,16 +71,16 @@ def filefunct(mycl):
 # for us-west-1
 ami_instance = 'ami-824c4ee2'
 securitygroup = 'awsclass01a'
-securitykey = 'vitoshkav64'
-keylocation = '/Users/vicky/Desktop/AWS_Class'
+securitykey = ''
+keylocation = ''
 region = 'us-west-1'
 
 
 # for us-east-1
 ami_instance1 =  'ami-0080e4c5bc078760e'
 securitygroup1 = 'awclass-us-east-1'
-securitykey1 = 'vitoshkavuseast1'
-keylocation1 = '/Users/vicky/Desktop/AWS_Class'
+securitykey1 = ''
+keylocation1 = '/'
 region1 = 'us-east-1'
 
 # lines below are checking the number of imput paramters
