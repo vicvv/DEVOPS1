@@ -80,7 +80,7 @@ $ aws s3api list-objects help
 $ aws s3api list-objects --bucket mybucket-witha3api2 --query 'Contents[].{Key: Key, Size: Size}'
 [
     {
-        "Key": "/Users/vicky/Desktop/AWS_Class/AWS_Homework2/TestDataforAWSs3api.txt",
+        "Key": "/Users/vicky/Desktop/AWS_Class/AWS_H2/TestDataforAWSs3api.txt",
         "Size": 0
     },
     {
@@ -98,7 +98,7 @@ $ rm TestData.txt
 $ aws s3 help
 $ aws s3 sync help
 $ aws s3 sync . s3://mybucket-0000002
-upload: ./AWS_Homework2.txt to s3://mybucket-0000002/AWS_Homework2.txt
+upload: ./AWS_Homework2.txt to s3://mybucket-0000002/AWS_H2.txt
 
 # Using aws s3api:
 
@@ -113,7 +113,7 @@ $ aws s3 rb help
 $ aws s3 sync . s3://mybucket-0000002 --delete
 delete: s3://mybucket-0000002/TestData.txt
 $ aws s3 rb s3://mybucket-0000002 --force
-delete: s3://mybucket-0000002/AWS_Homework2.txt
+delete: s3://mybucket-0000002/AWS_H2.txt
 remove_bucket: mybucket-0000002
 $ 
 
