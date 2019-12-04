@@ -20,8 +20,8 @@ class Createinstance:
     # class variables
     amiid='ami-824c4ee2'
     instance_type='t2.micro'
-    keypair_name='vitoshkav64'
-    security_group_name='awsclass01a'
+    keypair_name=''
+    security_group_name=''
     cidr='0.0.0.0/0'
     tag='myinst01'
     user_data=None
