@@ -84,7 +84,7 @@ print("Connecting to the instance with ssh .....")
 (data, data1) = myinst.connect_paramiko(instance_id, dns_name, ip_address, commands1r, commands2r)
 print(data, data1)
 
-# below are comments for my personal use
+# below are comments for use in shell
 # before snapshot
 '''
 cat /proc/partitions;
